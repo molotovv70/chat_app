@@ -27,3 +27,7 @@ Info  | RdCoroutineScope          | 52:DefaultDispatcher-worker-32 | RdCoroutine
 2024-05-21 00:45:31,355 [ 219973]   WARN - #c.j.p.PhpIndex - Invalid Signature '\Illuminate\Support\LazyCollection<#ᢐ\TKey.,#ᢐ\TMapValue.>'
 2024-05-21 00:47:06,607 [ 315225] SEVERE - com.jediterm.terminal.model.TerminalTextBuffer - Attempt to get line out of bounds: 13 >= 13
 2024-05-21 00:47:06,608 [ 315226] SEVERE - com.jediterm.terminal.model.TerminalTextBuffer - Attempt to get line out of bounds: 13 >= 13
+2024-05-21 01:14:39,767 [1968385] SEVERE - com.jediterm.terminal.model.TerminalTextBuffer - Attempt to get line out of bounds: 13 >= 13
+2024-05-21 01:14:39,768 [1968386] SEVERE - com.jediterm.terminal.model.TerminalTextBuffer - Attempt to get line out of bounds: 13 >= 13
+2024-05-21 01:14:39,773 [1968391] SEVERE - com.jediterm.terminal.model.TerminalTextBuffer - Attempt to get line out of bounds: 13 >= 13
+2024-05-21 01:14:39,774 [1968392] SEVERE - com.jediterm.terminal.model.TerminalTextBuffer - Attempt to get line out of bounds: 13 >= 13
