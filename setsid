@@ -1,0 +1,29 @@
+
+  ============================================================================  
+
+    ja-netfilter 2022.2.0
+
+    A javaagent framework :)
+
+    https://github.com/ja-netfilter/ja-netfilter
+
+  ============================================================================  
+
+2024-05-21 00:41:54,255 [   2873]   WARN - #c.i.c.ComponentStoreImpl - Duplicated scheme Light - old: Light, new Light
+Info  | RdCoroutineScope          | 52:DefaultDispatcher-worker-32 | RdCoroutineHost overridden 
+2024-05-21 00:41:56,464 [   5082]   WARN - #c.i.w.i.i.l.m.ModuleBridgeLoaderService - Loaded from cache, but no serialized modules found. Workspace model cache will be ignored, project structure will be recreated.
+
+2024-05-21 00:42:13,248 [  21866]   WARN - #c.i.o.a.ActionStub - ActionGroup should be registered using <group> tag: id="WelcomeScreen.CreateDirectoryProject" class="com.jetbrains.php.actions.PhpStormNewProjectStep"
+
+2024-05-21 00:42:48,371 [  56989]   WARN - #c.i.i.s.p.i.BundledSharedIndexPostStartupActivity - Skipped 1 pre-built shared indexes: bundled-js-predefined-1d06a55b98c1-468b59eb9661-JavaScript-PS-232.10300.41
+2024-05-21 00:43:02,268 [  70886]   WARN - #c.i.o.a.i.ActionUpdater - 1198 ms to grab EDT for TipPanel$3#update@TipsAndTricksDialog (com.intellij.ide.util.TipPanel$3)
+
+(java:200844): Gtk-WARNING **: 00:43:16.508: gtk_disable_setlocale() must be called before gtk_init()
+2024-05-21 00:45:19,698 [ 208316]   WARN - #c.i.o.v.ExternallyAddedFilesProcessorImpl - Cannot find project config directory for non-default and non-directory based project chat_app
+2024-05-21 00:45:26,204 [ 214822]   WARN - #c.j.p.PhpIndex - Completing type '#π(#M#耒(\ReflectionClass)((\string)(\object)).getMethods)()' took 568ms, visited:[#π(#M#耒(\ReflectionClass)((\string)(\object)).getMethods)()]
+2024-05-21 00:45:26,209 [ 214827]   WARN - #c.j.p.PhpIndex - Completing type '#顶#π(#M#耒(\ReflectionClass)((\string)(\object)).getMethods)()' took 574ms, visited:[#顶#π(#M#耒(\ReflectionClass)((\string)(\object)).getMethods)()]
+2024-05-21 00:45:28,135 [ 216753]   WARN - #c.j.p.PhpIndex - Completing type '#M#π(#g#F\Illuminate\Foundation\Providers\tap)(#g#F\Illuminate\Foundation\Providers\validator)(\Closure<#ᤓvalidatorᤓ,\void>).validate' took 932ms, visited:[#M#π(#g#F\Illuminate\Foundation\Providers\tap)(#g#F\Illuminate\Foundation\Providers\validator)(\Closure<#ᤓvalidatorᤓ,\void>).validate]
+2024-05-21 00:45:31,344 [ 219962]   WARN - #c.j.p.PhpIndex - Invalid Signature '\Illuminate\Support\Collection<#ᢐ\TKey.,#ᢐ\TMapValue.>'
+2024-05-21 00:45:31,355 [ 219973]   WARN - #c.j.p.PhpIndex - Invalid Signature '\Illuminate\Support\LazyCollection<#ᢐ\TKey.,#ᢐ\TMapValue.>'
+2024-05-21 00:47:06,607 [ 315225] SEVERE - com.jediterm.terminal.model.TerminalTextBuffer - Attempt to get line out of bounds: 13 >= 13
+2024-05-21 00:47:06,608 [ 315226] SEVERE - com.jediterm.terminal.model.TerminalTextBuffer - Attempt to get line out of bounds: 13 >= 13
