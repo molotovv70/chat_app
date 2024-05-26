@@ -16,6 +16,13 @@ const menu = [
     { icon: 'logout', title: 'Logout' },
 ]
 
+
+//
+import { usePage } from "@inertiajs/vue3";
+const page = usePage();
+const username = page.props.auth.user.name
+//
+
 </script>
 
 <template>

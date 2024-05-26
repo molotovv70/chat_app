@@ -2,18 +2,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import {computed, onBeforeMount, onMounted, ref, useAttrs, provide} from "vue";
-import { useUserStore } from '@/Stores/UserStore';
 import '@/Layouts/Chat/PopUpMenu.vue';
 
 const showModal = ref(false);
-
-const userStore = useUserStore()
-const attrs = useAttrs();
-const user = attrs.auth.user
-
-onBeforeMount(() => {
-    userStore.setUser(user);
-});
 
 </script>
 
@@ -21,7 +12,7 @@ onBeforeMount(() => {
     <Head title="Chat" />
     <AuthenticatedLayout>
         <VaButton @click="showModal = !showModal">
-            User
+            User {{ $page.props.auth.user.name }}
         </VaButton>
         <VaModal
             v-model="showModal"

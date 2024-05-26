@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Chat;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,7 +14,9 @@ class ChatController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Chat/Index');
+//        $user = auth()->user();
+        $user = 1;
+        return Inertia::render('Chat/Index', ['user' => $user]);
     }
 
     /**
@@ -21,7 +24,7 @@ class ChatController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Chat/Create');
     }
 
     /**

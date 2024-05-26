@@ -24,6 +24,8 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::prefix('/chats')->prefix('chats')->group(function () {
         Route::get('/', [ChatController::class, 'index'])->name('chat.index');
+        Route::get('/create', [ChatController::class, 'create'])->name('chat.create');
+        Route::post('/', [ChatController::class, 'store'])->name('chat.store');
     });
 });
 

@@ -21,6 +21,7 @@
     "dependencies": {
         "pinia": "^2.1.7",
         "url": "^0.11.3",
+        "vue-router": "^4.3.2",
         "vuestic-ui": "^1.9.10",
         "vuetify": "^3.6.6"
     }

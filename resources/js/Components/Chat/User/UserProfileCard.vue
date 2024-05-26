@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import UserAvatar from "@/Components/Chat/User/UserAvatar.vue";
-import { useUserStore } from "@/Stores/UserStore.js";
+import { usePage } from "@inertiajs/vue3";
 
-const userStore = useUserStore();
-const user = userStore.user
+const page = usePage();
+const user = page.props.auth.user
 
 const props = defineProps({
     isShowAvatar: {
