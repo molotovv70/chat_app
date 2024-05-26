@@ -7,12 +7,15 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
+import '@/Components/Chat/Sidebar.vue';
+import Sidebar from "@/Components/Chat/Sidebar.vue";
+
 const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen main-wrapper bg-gray-100 dark:bg-gray-900">
             <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,6 +34,9 @@ const showingNavigationDropdown = ref(false);
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
+                                </NavLink>
+                                <NavLink :href="route('chat.index')" :active="route().current('chat.index')">
+                                    Chat
                                 </NavLink>
                             </div>
                         </div>
@@ -144,9 +150,28 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class='main-container'>
+                <Sidebar>
+                    <template #top>
+                        dfsgdfgfdgdf
+                    </template>
+                </Sidebar>
                 <slot />
             </main>
         </div>
     </div>
 </template>
+
+<style>
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+</style>
+

@@ -1,5 +1,13 @@
+// UI Library & Icons
+import { createVuestic } from "vuestic-ui";
+// import "vuestic-ui/css";
+import "material-design-icons-iconfont/dist/material-design-icons.min.css";
+
+
+// Primary file
 import './bootstrap';
 import '../css/app.css';
+
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -15,6 +23,13 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(createVuestic({
+                config: {
+                    colors: {
+                        currentPresetName: 'dark'
+                    },
+                },
+            }))
             .mount(el);
     },
     progress: {
