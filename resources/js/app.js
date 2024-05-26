@@ -8,6 +8,9 @@ import "material-design-icons-iconfont/dist/material-design-icons.min.css";
 import './bootstrap';
 import '../css/app.css';
 
+// Plugins
+import { pinia } from "@/Plugins/pinia.js";
+
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -21,6 +24,7 @@ createInertiaApp({
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
+            .use(pinia)
             .use(plugin)
             .use(ZiggyVue)
             .use(createVuestic({

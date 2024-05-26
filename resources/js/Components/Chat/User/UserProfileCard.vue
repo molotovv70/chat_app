@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from "vue";
-
 import UserAvatar from "@/Components/Chat/User/UserAvatar.vue";
+import { useUserStore } from "@/Stores/UserStore.js";
 
+const userStore = useUserStore();
+const user = userStore.user
 
 const props = defineProps({
     isShowAvatar: {
@@ -22,9 +24,6 @@ const props = defineProps({
         default: ''
     },
 })
-
-
-
 </script>
 
 <template>
@@ -33,8 +32,8 @@ const props = defineProps({
     >
         <UserAvatar v-if="isShowAvatar" :size="iconSize" />
         <div class="profile-card__user-info-container">
-            <b :class="['profile-card__user-name', userNameStyle]">Ivan Ivanov</b>
-            <p class="profile-card__user-id">@user123123</p>
+            <b :class="['profile-card__user-name', userNameStyle]">{{ user.name }}</b>
+            <p class="profile-card__user-id">@{{ user.username }}</p>
         </div>
     </div>
 

@@ -2,8 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
-import '@/Components/Chat/Sidebar.vue';
-import Sidebar from "@/Components/Chat/Sidebar.vue";
+import '@/Layouts/Chat/PopUpMenu.vue';
+import Sidebar from "@/Layouts/Chat/PopUpMenu.vue";
 </script>
 
 <template>

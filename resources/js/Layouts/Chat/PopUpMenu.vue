@@ -2,7 +2,7 @@
 import { ref, watchEffect } from 'vue'
 import { useBreakpoint } from 'vuestic-ui'
 import UserProfileCard from "@/Components/Chat/User/UserProfileCard.vue";
-import UserProfileModalForm from "@/Components/Chat/User/UserProfileModalForm.vue";
+import UserProfileModalForm from "@/Layouts/Chat/User/UserProfileModalForm.vue";
 
 const showSidebar = ref(false)
 const showModal = ref(false)

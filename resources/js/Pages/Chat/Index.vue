@@ -1,11 +1,19 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { ref } from "vue";
+import {computed, onBeforeMount, onMounted, ref, useAttrs, provide} from "vue";
+import { useUserStore } from '@/Stores/UserStore';
+import '@/Layouts/Chat/PopUpMenu.vue';
 
 const showModal = ref(false);
 
-import '@/Components/Chat/Sidebar.vue';
+const userStore = useUserStore()
+const attrs = useAttrs();
+const user = attrs.auth.user
+
+onBeforeMount(() => {
+    userStore.setUser(user);
+});
 
 </script>
 
