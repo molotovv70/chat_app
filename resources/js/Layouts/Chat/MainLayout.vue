@@ -155,6 +155,11 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Content -->
             <main class='main-container'>
+                <Sidebar>
+                    <template #top>
+                        dfsgdfgfdgdf
+                    </template>
+                </Sidebar>
                 <slot />
             </main>
         </div>

@@ -1,7 +1,7 @@
 <script setup>
-import UpdateProfileInformationForm from "@/Layouts/Chat/User/Partitials/UpdateProfileInformationForm.vue";
-import UpdatePasswordForm from "@/Layouts/Chat/User/Partitials/UpdatePasswordForm.vue";
-import DeleteUserForm from "@/Layouts/Chat/User/Partitials/DeleteUserForm.vue";
+import UpdateProfileInformationForm from "@/Components/Chat/User/Form/Partitials/UpdateProfileInformationForm.vue";
+import UpdatePasswordForm from "@/Components/Chat/User/Form/Partitials/UpdatePasswordForm.vue";
+import DeleteUserForm from "@/Components/Chat/User/Form/Partitials/DeleteUserForm.vue";
 
 const submit1 = () => {
     console.log(231312);

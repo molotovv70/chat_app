@@ -1,5 +1,10 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
+import MainLayout from "@/Layouts/Chat/MainLayout.vue";
+
+defineOptions({
+    layout: MainLayout
+})
 
 defineProps({
     auth: {
@@ -11,6 +16,5 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Chat" />
     <h1>Hello</h1>
 </template>
