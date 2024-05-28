@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from "vue";
 import UserAvatar from "@/Components/Chat/User/UserAvatar.vue";
 import { usePage } from "@inertiajs/vue3";
 
@@ -10,10 +9,6 @@ const props = defineProps({
     isShowAvatar: {
         type: Boolean,
         default: true
-    },
-    iconSize: {
-        type: Number,
-        default: 64
     },
     userNameStyle: {
         type: String,
@@ -30,7 +25,7 @@ const props = defineProps({
     <div
         class="profile-card"
     >
-        <UserAvatar v-if="isShowAvatar" :size="iconSize" />
+        <UserAvatar v-if="isShowAvatar" />
         <div class="profile-card__user-info-container">
             <b :class="['profile-card__user-name', userNameStyle]">{{ user.name }}</b>
             <p class="profile-card__user-id">@{{ user.username }}</p>
@@ -42,8 +37,10 @@ const props = defineProps({
 <style scoped>
 .profile-card {
     display: flex;
-    color: #e5e7eb;
+    flex-direction: column;
     align-items: center;
+    width: 100%;
+    color: #e5e7eb;
 }
 
 .profile-card__user-info-container {

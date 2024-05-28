@@ -24,8 +24,9 @@ const showModal = ref(false);
         <h3 class="va-h3">
             Title
         </h3>
+
         <p>
-            Classic modal overlay which represents a dialog box or other interactive
+            Classic modal overlay which representssdfsfsdf a dialog box or other interactive
             component, such as a dismissible alert, sub-window, etc.
         </p>
     </VaModal>
