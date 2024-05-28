@@ -44,7 +44,10 @@ const props = defineProps({
 }
 
 .profile-card__user-info-container {
-    margin-left: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
 }
 .profile-card__user-name {
 

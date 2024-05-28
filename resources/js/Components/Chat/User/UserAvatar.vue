@@ -11,7 +11,7 @@ const user = page.props.auth.user
         <div class="flex">
             <div class="mb-4 mx-auto self-center">
                 <div v-if="user.avatar_path" class="user__image-wrapper self-center">
-                    <a class="" href="#" @click.prevent="$refs.avatar_load.click()">
+                    <a class="" href="#" @click.prevent="$refs.avatar_load?.click()">
                         <img
                             class="user__image"
                             :src="`/storage/${user.avatar_path}`"

@@ -3,21 +3,25 @@ import { ref, watchEffect } from 'vue'
 import { useBreakpoint } from 'vuestic-ui'
 import UserProfileCard from "@/Components/Chat/User/UserProfileCard.vue";
 import UserProfileModalForm from "@/Components/Chat/User/Form/UserProfileModalForm.vue";
+import { Link } from '@inertiajs/vue3';
 
 const showSidebar = ref(false)
 const showModal = ref(false)
 
 const menu = [
-    { icon: 'question_answer', title: 'Create Chat' },
-    { icon: 'group', title: 'Create Channel' },
-    { icon: 'notifications', title: 'Notifications' },
-    { icon: 'bookmarks', title: 'Bookmarks' },
-    { icon: 'settings', title: 'Edit Group Tabs' },
-    { icon: 'logout', title: 'Logout' },
+    { icon: 'question_answer', title: 'Create Chat', route_name: 'chat.create' },
+    // { icon: 'group', title: 'Create Channel', route_name: 'group' },
+    // { icon: 'notifications', title: 'Notifications', route_name: 'notification' },
+    // { icon: 'bookmarks', title: 'Bookmarks', route_name: 'bookmark' },
+    // { icon: 'settings', title: 'Edit Group Tabs', route_name: 'setting' },
+    { icon: 'logout', title: 'Logout', route_name: 'logout' },
 ]
-
+//     <DropdownLink :href="route('logout')" method="post" as="button">
+//     Log Out
+// </DropdownLink>
 
 import { usePage } from "@inertiajs/vue3";
+import DropdownLink from "@/Components/DropdownLink.vue";
 const page = usePage();
 const username = page.props.auth.user.name
 
@@ -42,11 +46,11 @@ const username = page.props.auth.user.name
                         <UserProfileModalForm v-model="showModal" />
                     </VaSidebarItemContent>
                 </VaSidebarItem>
-                <VaSidebarItem v-for="{ icon, title } in menu" :key="icon">
-                    <VaSidebarItemContent>
-                        <VaIcon :name="icon" />
+                <VaSidebarItem v-for="elem in menu" :key="elem.icon" :href="route(elem.route_name)" method="post" as="button">
+                    <VaSidebarItemContent >
+                        <VaIcon :name="elem.icon" />
                         <VaSidebarItemTitle>
-                            {{ title }}
+                            {{ elem.title }}
                         </VaSidebarItemTitle>
                     </VaSidebarItemContent>
                 </VaSidebarItem>
