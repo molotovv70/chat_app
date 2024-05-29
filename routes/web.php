@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [ChatController::class, 'store'])->name('chat.store');
         Route::get('/{id}', [ChatController::class, 'show'])->name('chat.show');
     });
+
+    Route::prefix('/messages')->prefix('messages')->group(function () {
+        // view routes for admin...
+//        Route::get('/', [ChatController::class, 'index'])->name('message.index');
+        Route::post('/', [MessageController::class, 'store'])->name('message.store');
+    });
+
+
 });
 
 
