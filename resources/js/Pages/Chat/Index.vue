@@ -1,9 +1,18 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import {Head, usePage} from '@inertiajs/vue3';
 import {computed, onBeforeMount, onMounted, ref, useAttrs, provide} from "vue";
 import '@/Components/Chat/Sidebar/PopUpMenu.vue';
 import MainLayout from "@/Layouts/Chat/MainLayout.vue";
+import ChatItem from "@/Components/Chat/Sidebar/ChatItem.vue";
+import ChatMenu from "@/Components/Chat/Sidebar/ChatMenu.vue";
+
+defineProps({
+    chats: {
+        type: Array,
+        default: [],
+    }
+})
 
 defineOptions({
     layout: MainLayout
@@ -11,23 +20,12 @@ defineOptions({
 
 const showModal = ref(false);
 
+
+const page = usePage();
+const username = page.props.auth.user.name
+
 </script>
 
 <template>
-    <VaButton @click="showModal = !showModal">
-        User {{ $page.props.auth.user.name }}
-    </VaButton>
-    <VaModal
-        v-model="showModal"
-        ok-text="Apply"
-    >
-        <h3 class="va-h3">
-            Title
-        </h3>
-
-        <p>
-            Classic modal overlay which representssdfsfsdf a dialog box or other interactive
-            component, such as a dismissible alert, sub-window, etc.
-        </p>
-    </VaModal>
+    <ChatMenu :chats="chats" />
 </template>

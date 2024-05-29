@@ -10,11 +10,15 @@ class Chat extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = [
-        'title',
-        'description',
-        'avatar_path',
-    ];
+    protected $guarded = false;
+
+    protected $fillable = ['*'];
+
+//    protected $fillable = [
+//        'title',
+//        'description',
+//        'avatar_path',
+//    ];
 
 //    protected $hidden = [
 //        'password',

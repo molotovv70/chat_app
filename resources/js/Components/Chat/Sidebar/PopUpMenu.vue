@@ -61,18 +61,20 @@ const username = page.props.auth.user.name
     </div>
 </template>
 
-<style scoped>
+<style>
 
 .sidebar {
-    position: absolute;
+    position: relative;
     width: min-content;
 
+    overflow: scroll;
+
     display: flex;
-    flex-direction: column;
+    //flex-direction: column;
+    flex-flow: wrap;
 }
 
 .sidebar__content {
-    display: inline-flex;
     height: 100%;
 }
 
@@ -83,8 +85,11 @@ const username = page.props.auth.user.name
     bottom: 10px;
     right: 10px;
 }
-
+.va-navbar__left {
+    align-self: flex-start !important;
+}
 .navbar {
+    height: min-content;
 }
 
 </style>

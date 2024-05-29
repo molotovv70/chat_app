@@ -49,9 +49,6 @@ const loadImage = (image) => {
 
         <VaButton type="button" @click.prevent="storeData">Create Chat</VaButton>
     </form>
-
-
-
 </template>
 
 <style scoped>
