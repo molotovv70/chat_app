@@ -1,11 +1,11 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import {computed, useAttrs} from 'vue'
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import ApplicationLogo from '@/Components/Inertia/ApplicationLogo.vue';
+import Dropdown from '@/Components/Inertia/Dropdown.vue';
+import DropdownLink from '@/Components/Inertia/DropdownLink.vue';
+import NavLink from '@/Components/Inertia/NavLink.vue';
+import ResponsiveNavLink from '@/Components/Inertia/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 
@@ -155,27 +155,29 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Content -->
             <main class='main-container'>
-                <Sidebar>
-                    <template #top>
-                        dfsgdfgfdgdf
-                    </template>
-                </Sidebar>
-                <slot />
+                <Sidebar />
+                <div class="main-content">
+                    <slot />
+                </div>
             </main>
         </div>
     </div>
 </template>
 
-<style>
+<style scoped>
 .main-wrapper {
     display: flex;
     flex-direction: column;
 }
 
 .main-container {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
+    color: #e5e7eb;
+}
+
+.main-content {
+    width: 1320px;
+    padding: 0 20px;
+    margin: 0 auto;
 }
 </style>
 

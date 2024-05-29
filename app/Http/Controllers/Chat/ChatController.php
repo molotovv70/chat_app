@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Chat;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Chat\StoreRequest;
+use App\Models\Chat;
 use App\Models\User;
+use App\Services\ChatService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,8 +17,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-//        $user = auth()->user();
-        $user = 1;
+        $user = auth()->user();
         return Inertia::render('Chat/Index', ['user' => $user]);
     }
 
@@ -30,9 +32,14 @@ class ChatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['avatar_path'] = ChatService::storeAvatarChat($data['avatar_path']);
+
+        Chat::create($data);
+
+        return redirect()->route('chat.index');
     }
 
     /**

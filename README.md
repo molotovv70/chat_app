@@ -15,3 +15,4 @@ Laravel, Vue + Inertia, MySQL, Docker
 ![Dataase Stucture](docs/assets/readme/db_structure.svg)
 
 
+

@@ -21,7 +21,7 @@ const menu = [
 // </DropdownLink>
 
 import { usePage } from "@inertiajs/vue3";
-import DropdownLink from "@/Components/DropdownLink.vue";
+import DropdownLink from "@/Components/Inertia/DropdownLink.vue";
 const page = usePage();
 const username = page.props.auth.user.name
 
@@ -64,11 +64,11 @@ const username = page.props.auth.user.name
 <style scoped>
 
 .sidebar {
+    position: absolute;
     width: min-content;
 
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 .sidebar__content {
