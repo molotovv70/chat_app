@@ -1,31 +1,25 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, usePage} from '@inertiajs/vue3';
 import {computed, onBeforeMount, onMounted, ref, useAttrs, provide} from "vue";
 import '@/Components/Chat/Sidebar/PopUpMenu.vue';
 import MainLayout from "@/Layouts/Chat/MainLayout.vue";
-import ChatItem from "@/Components/Chat/Sidebar/ChatItem.vue";
-import ChatMenu from "@/Components/Chat/Sidebar/ChatMenu.vue";
+import {useChatsStore} from "@/Stores/Chat.js";
 
-defineProps({
-    chats: {
-        type: Array,
-        default: [],
-    }
-})
+const chatsStore = useChatsStore();
+
+
 
 defineOptions({
     layout: MainLayout
 })
 
-const showModal = ref(false);
-
-
-const page = usePage();
-const username = page.props.auth.user.name
+function testStore() {
+    const res = chatsStore.setValue()
+    console.log(res)
+}
 
 </script>
 
 <template>
-    <ChatMenu :chats="chats" />
+    <VaButton @click.prevent="testStore">Test</VaButton>
 </template>

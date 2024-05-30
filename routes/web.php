@@ -3,6 +3,7 @@
 use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,9 +39,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [MessageController::class, 'store'])->name('message.store');
     });
 
-
+    Route::prefix('/users')->prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('user.index');
+        Route::post('/', [UserController::class, 'storeMessage'])->name('user.chat.store');
+        Route::get('/{id}/chat', [UserController::class, 'show'])->name('user.chat.show');
+//        Route::patch('/', [UserController::class, 'store'])->name('user.message.update');
+    });
 });
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

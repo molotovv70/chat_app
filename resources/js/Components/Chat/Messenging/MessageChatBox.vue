@@ -1,12 +1,15 @@
 <script setup>
+import {usePage} from "@inertiajs/vue3";
 
+const page = usePage();
+const user = page.props.auth.user
 </script>
 
 <template>
     <div class="message-box__wrapper">
         <div class="message-box">
             <div class="message-box__avatar">
-<!--                <img src="" alt="" srcset="">-->
+                <img class="message-box__image" :src="`/storage/${user.avatar_path}`" alt="" srcset="">
             </div>
             <div class="message-box__content">
                 <div class="message-box-text">
@@ -45,6 +48,9 @@
     height: 50px;
     width: 50px;
     background-color: #6b7280;
+    border-radius: 100%;
+}
+.message-box__image {
     border-radius: 100%;
 }
 .message-box__content {

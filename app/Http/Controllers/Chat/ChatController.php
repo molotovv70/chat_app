@@ -19,14 +19,14 @@ class ChatController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $chats = Chat::all();
+//        $chats = Chat::all();
 
-        $chatsArray = ChatWithLastMessageResource::collection($chats)->resolve();
+//        $chatsArray = ChatWithLastMessageResource::collection($chats)->resolve();
 
         return Inertia::render('Chat/Index', [
             'user' => $user,
-            'chats' => $chatsArray,
         ]);
+//            'chats' => $chatsArray,
     }
 
     /**
@@ -82,5 +82,14 @@ class ChatController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getChats() {
+        $chats = Chat::all();
+
+        $chatsArray = ChatWithLastMessageResource::collection($chats)->resolve();
+
+        return $chatsArray;
+
     }
 }

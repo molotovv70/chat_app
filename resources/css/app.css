@@ -1,4 +1,4 @@
-:root{--va-checkbox-square-border-radius:50%;--va-input-wrapper-border-radius:99999px}
+:root{--va-checkbox-square-border-radius:50%;--va-input-wrapper-border-radius:99999px;background-color:#18181b}
 
 @tailwind base;
 @tailwind components;
