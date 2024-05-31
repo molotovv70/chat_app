@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('user.index');
         Route::post('/', [UserController::class, 'storeMessage'])->name('user.chat.store');
         Route::get('/{id}/chat', [UserController::class, 'show'])->name('user.chat.show');
+        Route::post('/{id}/chat', [UserController::class, 'store'])->name('user.chat.store');
 //        Route::patch('/', [UserController::class, 'store'])->name('user.message.update');
     });
 });

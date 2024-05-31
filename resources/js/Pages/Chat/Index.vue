@@ -7,8 +7,6 @@ import {useChatsStore} from "@/Stores/Chat.js";
 
 const chatsStore = useChatsStore();
 
-
-
 defineOptions({
     layout: MainLayout
 })

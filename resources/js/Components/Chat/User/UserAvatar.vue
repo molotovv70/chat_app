@@ -4,6 +4,13 @@ import {Link, usePage} from "@inertiajs/vue3";
 const page = usePage();
 const user = page.props.auth.user
 
+const props = defineProps({
+    size: {
+        type: Number,
+        default: 256
+    },
+})
+
 </script>
 
 <template>
@@ -21,7 +28,7 @@ const user = page.props.auth.user
                 </div>
                 <div v-else class="user__image-wrapper">
                     <a class="" href="#" @click.prevent="$refs.avatar_load.click()">
-                        <VaIcon class="user__image" name="account_circle" :size="256"  />
+                        <VaIcon class="user__image" name="account_circle" :size="props.size"  />
                     </a>
                 </div>
             </div>
@@ -37,15 +44,15 @@ const user = page.props.auth.user
 }
 
 .user__image {
-    width: 128px;
-    height: 128px;
+    //width: 128px;
+    //height: 128px;
     border-radius: 100%;
 }
 
 .user__image-wrapper {
     object-fit: fill;
-    width: 128px;
-    height: 128px;
+    //width: 128px;
+    //height: 128px;
     display: block;
 }
 

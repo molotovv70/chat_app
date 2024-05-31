@@ -20,6 +20,9 @@ export const useUsersStore = defineStore('users', {
         addValue(user) {
             this.users.push(user);
         },
+        getSingleValue(id) {
+            return this.users[id];
+        }
     },
     getters: {
         getValue() {

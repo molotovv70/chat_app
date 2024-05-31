@@ -1,19 +1,48 @@
 <script setup>
 import {usePage} from "@inertiajs/vue3";
+import {onMounted, ref} from "vue";
+import {useUsersStore} from "@/Stores/User.js";
 
-const page = usePage();
-const user = page.props.auth.user
+const UsersStore = useUsersStore();
+
+const props = defineProps({
+    isYours: {
+        type: Boolean,
+        default: true
+    },
+    message: {
+        type: Object,
+        default: {}
+    },
+    user: {
+        type: Object,
+        default: {}
+    },
+    user1: {
+        type: Array,
+    }
+})
+
+// const myUser = ref(UsersStore.getSingleValue(props.message.user_id_from));
+onMounted(() => {
+    props.user1.value = UsersStore.getSingleValue(props.message.user_id_from)
+    // myUser = UsersStore.getSingleValue(message.user_id_from)
+    // myUser.value = props.message.user_id_from === props.user.id ? props.user : props.user_to;
+})
+
+// const page = usePage();
+// const myUser = page.props.auth.user
 </script>
 
 <template>
     <div class="message-box__wrapper">
-        <div class="message-box">
+        <div class="message-box" :class="{ 'reverse': !isYours }">
             <div class="message-box__avatar">
                 <img class="message-box__image" :src="`/storage/${user.avatar_path}`" alt="" srcset="">
             </div>
-            <div class="message-box__content">
+            <div class="message-box__content" :class="{ 'yours': isYours }">
                 <div class="message-box-text">
-                    hello, how do you feel today?
+                    {{ message.content }}
                 </div>
                 <div class="message-box__bottom">
     <!--               v-if reacions -->
@@ -44,6 +73,12 @@ const user = page.props.auth.user
     padding: 10px;
     align-items: flex-end;
 }
+.reverse {
+    flex-flow: row-reverse;
+}
+.yours {
+    background-color: #3472F0 !important;
+}
 .message-box__avatar {
     height: 50px;
     width: 50px;
@@ -57,7 +92,7 @@ const user = page.props.auth.user
     padding: 10px;
     max-width: 80%;
     border-radius: 15px 15px 15px 0px;
-    background-color: #3472F0;
+    background-color: #6b7280;
 }
 .message-box__bottom {
     width: 100%;

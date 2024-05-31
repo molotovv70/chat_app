@@ -11,7 +11,7 @@ const showSidebar = ref(false)
 const showModal = ref(false)
 
 
-const selectedButton = ref(1);
+const selectedButton = ref(0);
 const items = ref(null);
 
 defineProps({

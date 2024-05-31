@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Message\StoreRequest;
-use App\Models\Message;
+use App\Models\UserMessage;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -28,7 +28,7 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request, Message $message)
+    public function store(StoreRequest $request, UserMessage $message)
     {
         $data = $request->validated();
         $data['user_id'] = auth()->id();
