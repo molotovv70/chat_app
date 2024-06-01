@@ -1,7 +1,7 @@
 <script setup>
 
 import ChatItem from "@/Components/Chat/Sidebar/Item.vue";
-import {toRefs} from "vue";
+import {ref, toRefs} from "vue";
 
 const props = defineProps({
     items: {
@@ -16,10 +16,23 @@ const props = defineProps({
 
 const { items, route_name } = toRefs(props);
 
+const searchInput = ref();
+
 </script>
 
 <template>
     <div class="item-menu">
+        <div class="search-input">
+            <VaInput
+                v-model="searchInput"
+                class=""
+                placeholder="Search..."
+            >
+                <template #appendInner>
+                    <VaButton icon="search" color="Shadow" icon-color="TextPrimary" round />
+                </template>
+            </VaInput>
+        </div>
         <ChatItem v-for="item in items" :item="item" :id="item.id" :route_name="route_name" />
     </div>
 </template>
@@ -31,5 +44,9 @@ const { items, route_name } = toRefs(props);
     height: 100%;
     width: 250px;
     flex-direction: column;
+}
+.search-input {
+    padding: 15px 5px;
+    background-color: #1f262f;
 }
 </style>
