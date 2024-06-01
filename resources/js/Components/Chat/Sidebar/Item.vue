@@ -14,7 +14,6 @@ defineProps({
 
 <template>
     <Link :href="route(route_name, {id: item.id,})" class="item-item">
-<!--    <div class="item-item">-->
         <div class="item-item__img-container" v-if="item.avatar_path">
             <img class="item-item__img" :src="`/storage/${item.avatar_path}`" alt="">
         </div>
@@ -25,7 +24,6 @@ defineProps({
             <span class="item-item__title">{{ item.name }}</span>
             <p class="item-item__last-message">{{ item.last_message }}</p>
         </div>
-<!--    </div>-->
     </Link>
 </template>
 
@@ -34,6 +32,7 @@ defineProps({
     display: flex;
     align-items: center;
     height: 120px;
+    padding: 5px;
 }
 .item-item:hover {
     background-color: #6b7280;

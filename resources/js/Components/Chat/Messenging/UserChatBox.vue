@@ -1,5 +1,4 @@
 <script setup>
-import UserAvatar from "@/Components/Chat/User/UserAvatar.vue";
 import UserProfileModalForm from "@/Components/Chat/Messenging/UserProfileModalForm.vue";
 import {ref} from "vue";
 
@@ -15,32 +14,34 @@ const showModal = ref(false);
 
 <template>
     <div class="user-chat-box" @click="showModal = !showModal">
-        <div class="user-chat-box__avatar" >
-            <img class="user-chat-box__image" :src="`/storage/${user_to.avatar_path}`" alt="" srcset="">
-        </div>
-        <VaModal
-            v-model="showModal"
-            ok-text="Apply"
-            blur
-            max-width="650px"
-            max-height="800px"
-        >
-            <!--                sdfsdfs-->
-            <UserProfileModalForm :user="user_to" />
-        </VaModal>
-        <div class="user-chat-box__content">
-            <div class="user-chat-box__name">
-              {{ user_to.name }}
+            <div class="user-chat-box__avatar" >
+                <img class="user-chat-box__image" :src="`/storage/${user_to.avatar_path}`" alt="" srcset="">
             </div>
-            <div class="user-chat-box__last_online">
-                <span>was online 16hrs ago</span>
+            <VaModal
+                v-model="showModal"
+                ok-text="Apply"
+                blur
+                max-width="650px"
+                max-height="800px"
+            >
+                <UserProfileModalForm :user="user_to" />
+            </VaModal>
+            <div class="user-chat-box__content">
+                <div class="user-chat-box__name">
+                  {{ user_to.name }}
+                </div>
+                <div class="user-chat-box__last_online">
+                    <span>was online 16hrs ago</span>
+                </div>
             </div>
-        </div>
     </div>
 </template>
 
 <style scoped>
 .user-chat-box {
+    position: sticky;
+    top: 0;
+    z-index: 50;
     width: 100%;
     padding: 10px;
     border-radius: 15px;
@@ -49,6 +50,7 @@ const showModal = ref(false);
     align-self: flex-start;
     display: flex;
     align-content: flex-start;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 .user-chat-box:hover {
     cursor: pointer;

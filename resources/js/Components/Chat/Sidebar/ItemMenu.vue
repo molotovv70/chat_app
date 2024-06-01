@@ -1,7 +1,7 @@
 <script setup>
 
 import ChatItem from "@/Components/Chat/Sidebar/Item.vue";
-import {ref, toRefs} from "vue";
+import {computed, ref, toRefs} from "vue";
 
 const props = defineProps({
     items: {
@@ -16,7 +16,16 @@ const props = defineProps({
 
 const { items, route_name } = toRefs(props);
 
-const searchInput = ref();
+const searchInput = ref("");
+
+const filteredItems = computed(() => {
+    if (searchInput.value.length < 2) {
+        return items.value;
+    }
+    return items.value.filter(item => {
+        return item.name.toLowerCase().includes(searchInput.value.toLowerCase());
+    });
+});
 
 </script>
 
@@ -25,7 +34,6 @@ const searchInput = ref();
         <div class="search-input">
             <VaInput
                 v-model="searchInput"
-                class=""
                 placeholder="Search..."
             >
                 <template #appendInner>
@@ -33,7 +41,10 @@ const searchInput = ref();
                 </template>
             </VaInput>
         </div>
-        <ChatItem v-for="item in items" :item="item" :id="item.id" :route_name="route_name" />
+        <ChatItem v-for="item in filteredItems" :item="item" :id="item.id" :route_name="route_name" />
+        <div class="search-input__not-found text-center" v-if="searchInput&&!filteredItems.length">
+            <span class="text-center w-full">Items Not Found</span>
+        </div>
     </div>
 </template>
 
@@ -42,11 +53,21 @@ const searchInput = ref();
     display: flex;
     background-color: rgb(41, 45, 53);
     height: 100%;
-    width: 250px;
+    width: 300px;
     flex-direction: column;
 }
 .search-input {
     padding: 15px 5px;
     background-color: #1f262f;
+}
+.search-input__not-found {
+    display: flex;
+    align-items: center;
+    height: 120px;
+    background-color: rgba(218, 66, 66, 0.14);
+    font-weight: 700;
+    text-align: center;
+    font-size: 1.25em;
+    cursor: pointer;
 }
 </style>
