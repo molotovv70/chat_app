@@ -35,13 +35,13 @@ const sendMessage = async (message) => {
     console.log(response)
 }
 
-// const isYourMessage = () => {
-//     return user.id === props.user_to.id;
+// const isYourMessage = (message) => {
+//     return message.user_id_from === user.id;
 // }
 
-const computeUser = computed((message) => {
-    return user.id === message.user_id_from ? user : props.user_to
-})
+const computeUser = (message) => {
+    return message.user_id_from === user.id ? user : props.user_to
+}
 </script>
 
 <template>
@@ -51,12 +51,12 @@ const computeUser = computed((message) => {
             <div class="chat__messages" v-for="message in messages">
                 <MessageChatBox
                     :message="message"
-                    :user="user"
+                    :user="computeUser(message)"
                     :user_to="user_to"
+                    :is-yours="message.user_id_from === user.id"
                     :id="message.id"
                     class="chat__message-item"
                 />
-    <!--                :is-yours="user.id === props.user_to.id"-->
             </div>
         <InputMessageForm class="chat__input-message" @message-send="sendMessage" />
         </div>
@@ -66,17 +66,24 @@ const computeUser = computed((message) => {
 <style scoped>
 .chat__container {
     display: flex;
+    position: relative;
     flex-direction: column;
     flex-grow: 1;
     width: 760px;
     overflow: auto;
     padding: 20px;
     height: 100vh;
+    //height: 100%;
     margin: auto;
+}
+.chat__messages-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 .chat__messages {
     display: flex;
-    //flex-grow: 1;
+    flex-grow: 1;
     position: relative;
     flex-direction: column;
     align-content: flex-start;

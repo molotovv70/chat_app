@@ -1,6 +1,6 @@
 <script setup>
 import {usePage} from "@inertiajs/vue3";
-import {onMounted, ref, watchEffect, watch} from 'vue'
+import {onMounted, ref, watch} from 'vue'
 import UserProfileCard from "@/Components/Chat/User/UserProfileCard.vue";
 import UserProfileModalForm from "@/Components/Chat/User/Form/UserProfileModalForm.vue";
 import {useUsersStore} from "@/Stores/User.js";
@@ -9,7 +9,6 @@ import ChatMenu from "@/Components/Chat/Sidebar/ItemMenu.vue";
 
 const showSidebar = ref(false)
 const showModal = ref(false)
-
 
 const selectedButton = ref(0);
 const items = ref(null);
@@ -33,7 +32,7 @@ const menu = [
     // { icon: 'group', title: 'Create Channel', route_name: 'group' },
     // { icon: 'notifications', title: 'Notifications', route_name: 'notification' },
     // { icon: 'bookmarks', title: 'Bookmarks', route_name: 'bookmark' },
-    // { icon: 'settings', title: 'Edit Group Tabs', route_name: 'setting' },
+    // { icon: 'settings', title: 'Edit Group Tabs', route_name: 'settings' },
     {icon: 'logout', title: 'Logout', route_name: 'logout'},
 ]
 
@@ -120,8 +119,6 @@ onMounted(async () => {
 .sidebar {
     position: relative;
     width: min-content;
-
-//overflow: scroll; display: flex;
     flex-direction: column;
     flex-flow: wrap;
     height: 100%
@@ -130,7 +127,6 @@ onMounted(async () => {
 .sidebar__content {
     height: 100%;
 }
-
 
 .author {
     opacity: 0.7;
@@ -141,7 +137,6 @@ onMounted(async () => {
 }
 
 .va-sidebar__menu {
-//display: none;
 }
 
 .va-navbar__left {
@@ -157,7 +152,6 @@ onMounted(async () => {
     position: relative;
     height: 100%;
     width: 100%;
-//flex-grow: 1;
 }
 .sidebar__bottom-menu-none {
     display: none;
@@ -168,12 +162,10 @@ onMounted(async () => {
     flex-direction: column;
     background-color: rgb(31, 38, 47);
     align-items: flex-start;
-//justify-content: center; //justify-self: center; justify-items: center;
     width: 100%;
 }
 
 .sidebar__bottom-btn-item:hover {
-//background-color: #6b7280;
 }
 
 .sidebar__bottom-btn-item {

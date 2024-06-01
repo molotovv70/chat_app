@@ -11,6 +11,11 @@ class UserMessage extends Model
 
     protected $table = 'user_messages';
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
     protected $fillable = [
         'user_id_from',
         'user_id_to',
@@ -20,4 +25,13 @@ class UserMessage extends Model
         'updated_at',
         'deleted_at'
     ];
+
+
+//    protected function casts(): array
+//    {
+//        return [
+//            'created_at' => 'datetime:Y-m-d H:i:s',
+//            'updated_at' => 'datetime:Y-m-d H:i:s',
+//        ];
+//    }
 }

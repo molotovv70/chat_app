@@ -1,5 +1,7 @@
 <script setup>
 import UserAvatar from "@/Components/Chat/User/UserAvatar.vue";
+import UserProfileModalForm from "@/Components/Chat/Messenging/UserProfileModalForm.vue";
+import {ref} from "vue";
 
 defineProps({
     user_to: {
@@ -7,13 +9,25 @@ defineProps({
         default: []
     },
 })
+
+const showModal = ref(false);
 </script>
 
 <template>
-    <div class="user-chat-box">
-        <div class="user-chat-box__avatar">
+    <div class="user-chat-box" @click="showModal = !showModal">
+        <div class="user-chat-box__avatar" >
             <img class="user-chat-box__image" :src="`/storage/${user_to.avatar_path}`" alt="" srcset="">
         </div>
+        <VaModal
+            v-model="showModal"
+            ok-text="Apply"
+            blur
+            max-width="650px"
+            max-height="800px"
+        >
+            <!--                sdfsdfs-->
+            <UserProfileModalForm :user="user_to" />
+        </VaModal>
         <div class="user-chat-box__content">
             <div class="user-chat-box__name">
               {{ user_to.name }}
@@ -36,6 +50,10 @@ defineProps({
     display: flex;
     align-content: flex-start;
 }
+.user-chat-box:hover {
+    cursor: pointer;
+    background-color: #292f3b;
+}
 
 .user-chat-box__avatar {
     height: 50px;
@@ -47,7 +65,6 @@ defineProps({
     border-radius: 100%;
 }
 .user-chat-box__content {
-
 }
 .user-chat-box__last_online {
     font-size: 0.8em;

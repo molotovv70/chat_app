@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -37,6 +38,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
     /**
      * Get the attributes that should be cast.
      *
@@ -47,14 +49,53 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
     }
 
-    public function getMessagesChatUser($myUserId)
+    public function getMessagesFromMe($receiverUserId)
     {
         return $this->hasMany(UserMessage::class, 'user_id_from', 'id')
-            ->where('user_id_to', '=', $this->id)
-            ->orWhere('user_id_from', '=', $myUserId)
-            ->get();
+            ->where('user_id_to', '=', $receiverUserId);
+    }
+
+    public function getMessagesToMe($senderUserId)
+    {
+        return $this->hasMany(UserMessage::class, 'user_id_to', 'id')
+            ->where('user_id_from', '=', $senderUserId);
+    }
+
+
+    public function getMessagesChatUser($otherUserId)
+    {
+//        $myUserId = auth()->user()->id;
+
+        $sentMessages = $this->getMessagesFromMe($otherUserId)->get();
+        $receivedMessages = $this->getMessagesToMe($otherUserId)->get();
+
+        return $sentMessages->merge($receivedMessages)->sortBy('created_at');
+    }
+
+
+    public function getMessagesChatUserQuery($otherUserId, $myUserId)
+    {
+//        $myUserId = auth()->user()->id;
+
+        return UserMessage::where(function ($query) use ($myUserId, $otherUserId) {
+            $query->where('user_id_from', $myUserId)
+                ->where('user_id_to', $otherUserId);
+        })->orWhere(function ($query) use ($myUserId, $otherUserId) {
+            $query->where('user_id_from', $otherUserId)
+                ->where('user_id_to', $myUserId);
+        });
+    }
+
+    public function getChatLastMessage($otherUserId, $myUserId, Request $request)
+    {
+        dd($request->id);
+        return $this->getMessagesChatUserQuery($otherUserId, $myUserId)
+            ->orderBy('created_at', 'desc')
+            ->first();
     }
 }

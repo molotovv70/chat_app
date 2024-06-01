@@ -8,17 +8,20 @@ use App\Http\Resources\User\UserWithLastMessageResource;
 use App\Models\Message;
 use App\Models\User;
 use App\Models\UserMessage;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $myUserId = auth()->user();
         $users = User::all();
 
         return UserWithLastMessageResource::collection($users)->resolve();
@@ -32,6 +35,7 @@ class UserController extends Controller
     {
         $data = $request->all();
         $data['user_id_to'] = $id;
+//        dd($data);
 
         $message = UserMessage::create($data);
 
@@ -41,13 +45,25 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $fromId)
     {
-        $user = User::find($id);
+//        $authUserId = auth()->user()->id;
+//        $user = User::find($authUserId);
+//        $userData = UserResource::make($user)->resolve();
+//
+//        $messages = $user->getMessagesChatUser($fromId);
+
+        $user = User::find($fromId);
         $userData = UserResource::make($user)->resolve();
 
         $myUserId = auth()->user()->id;
         $messages = $user->getMessagesChatUser($myUserId);
+
+        foreach ($messages as $message) {
+            $message->created_at_formatted = $message->created_at->diffForHumans();
+            $message->updated_at_formatted = $message->updated_at->toFormattedDateString();
+        }
+
 
         return Inertia::render('User/Show', ['user_to' => $userData, 'messages' => $messages]);
     }
@@ -73,4 +89,5 @@ class UserController extends Controller
         $data = $request->validated();
 
     }
+
 }

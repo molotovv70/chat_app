@@ -2,6 +2,13 @@
 import {useForm, usePage} from "@inertiajs/vue3";
 import {ref} from "vue";
 
+defineProps({
+    user: {
+        type: Object,
+        required: false
+    }
+})
+
 const user = usePage().props.auth.user;
 
 const form = useForm({

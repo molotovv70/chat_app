@@ -2,6 +2,9 @@
 import {usePage} from "@inertiajs/vue3";
 import {onMounted, ref} from "vue";
 import {useUsersStore} from "@/Stores/User.js";
+import UpdateUserAvatarForm from "@/Components/Chat/User/Form/Partitials/UserAvatar/UpdateUserAvatarForm.vue";
+import UpdateProfileInformationForm from "@/Components/Chat/User/Form/Partitials/UpdateProfileInformationForm.vue";
+import UserProfileModalForm from "@/Components/Chat/Messenging/UserProfileModalForm.vue";
 
 const UsersStore = useUsersStore();
 
@@ -18,14 +21,17 @@ const props = defineProps({
         type: Object,
         default: {}
     },
-    user1: {
-        type: Array,
-    }
+    user_to: {
+        type: Object,
+        default: {}
+    },
 })
+
+const showModal = ref(false);
 
 // const myUser = ref(UsersStore.getSingleValue(props.message.user_id_from));
 onMounted(() => {
-    props.user1.value = UsersStore.getSingleValue(props.message.user_id_from)
+    // props.user1.value = UsersStore.getSingleValue(props.message.user_id_from)
     // myUser = UsersStore.getSingleValue(message.user_id_from)
     // myUser.value = props.message.user_id_from === props.user.id ? props.user : props.user_to;
 })
@@ -37,9 +43,20 @@ onMounted(() => {
 <template>
     <div class="message-box__wrapper">
         <div class="message-box" :class="{ 'reverse': !isYours }">
-            <div class="message-box__avatar">
+            <div class="message-box__avatar" @click="showModal = !showModal">
                 <img class="message-box__image" :src="`/storage/${user.avatar_path}`" alt="" srcset="">
             </div>
+
+            <VaModal
+                v-model="showModal"
+                ok-text="Apply"
+                blur
+                max-width="650px"
+                max-height="800px"
+            >
+<!--                sdfsdfs-->
+                <UserProfileModalForm :user="user" />
+            </VaModal>
             <div class="message-box__content" :class="{ 'yours': isYours }">
                 <div class="message-box-text">
                     {{ message.content }}
@@ -53,13 +70,17 @@ onMounted(() => {
                     </div>
                     <div class="message-box__time-container">
                         <span class="message-box__time-content">
-                            22:03
+                            {{ message.created_at_formatted }}
                         </span>
                     </div>
                 </div>
             </div>
             <div class="message-box__reply-btn">
-                <VaButton icon="reply" round />
+                <VaButton
+                    icon="reply"
+                    round :color="isYours ? 'primary' : 'secondary'"
+                    :class="!isYours ? 'rotate' : ''"
+                />
             </div>
         </div>
     </div>
@@ -85,6 +106,10 @@ onMounted(() => {
     background-color: #6b7280;
     border-radius: 100%;
 }
+.message-box__avatar:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
 .message-box__image {
     border-radius: 100%;
 }
@@ -104,5 +129,8 @@ onMounted(() => {
 .message-box__time-content {
     font-size: 0.75em;
     opacity: 0.7;
+}
+.rotate {
+    transform: rotate(180deg);
 }
 </style>
