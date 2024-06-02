@@ -7,10 +7,6 @@ export default defineConfig({
         host: 'localhost',
         port: 5173,
         strictPort: true,
-        cors: {
-            origin: 'http://localhost:8000',
-            credentials: true,
-        },
     },
     plugins: [
         laravel({
@@ -28,3 +24,7 @@ export default defineConfig({
     ],
 });
 
+        // cors: {
+        //     origin: 'http://localhost:8000',
+        //     credentials: true,
+        // },
