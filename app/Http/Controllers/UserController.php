@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StoreUserMessageEvent;
 use App\Http\Requests\User\StoreChat;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserWithLastMessageResource;
@@ -35,9 +36,14 @@ class UserController extends Controller
     {
         $data = $request->all();
         $data['user_id_to'] = $id;
-//        dd($data);
 
-        $message = UserMessage::create($data);
+        $userIdTo = $id;
+//        dd($userIdTo);
+        $message = UserMessage::create($data)->toArray();
+//        dd($message->data)
+
+        StoreUserMessageEvent::dispatch($userIdTo, $message);
+//        StoreUserMessageEvent::dispatch($data);
 
         return $message;
     }
@@ -47,12 +53,6 @@ class UserController extends Controller
      */
     public function show(string $fromId)
     {
-//        $authUserId = auth()->user()->id;
-//        $user = User::find($authUserId);
-//        $userData = UserResource::make($user)->resolve();
-//
-//        $messages = $user->getMessagesChatUser($fromId);
-
         $user = User::find($fromId);
         $userData = UserResource::make($user)->resolve();
 
@@ -63,6 +63,8 @@ class UserController extends Controller
             $message->created_at_formatted = $message->created_at->diffForHumans();
             $message->updated_at_formatted = $message->updated_at->toFormattedDateString();
         }
+
+        $messages->toArray();
 
 
         return Inertia::render('User/Show', ['user_to' => $userData, 'messages' => $messages]);
