@@ -9,7 +9,8 @@ export const useUsersStore = defineStore('users', {
         async setValue() {
             try {
                 // if (!this.users) {
-                    const res = await axios.get('/api/users');
+                //     const res = await axios.get('/api/users');
+                    const res = await axios.get('/users');
                     this.users = res.data; // Обновляем состояние users данными из ответа
                 // }
                 // return this.users

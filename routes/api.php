@@ -11,9 +11,14 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::prefix('/users')->group(function () {
-    Route::get('/', [UserController::class, 'index']);
-})->name('user');
+//Route::prefix('/users')->group(function () {
+//    Route::get('/', [UserController::class, 'index']);
+//})->name('user');
+
+Route::get('test', function () {
+//   dd(Route::getCurrentRoute()->middleware());
+    return \Illuminate\Support\Facades\Auth::user();
+});
 
 Route::prefix('/chats')->group(function () {
     Route::get('/', [ChatController::class, 'getChats']);
