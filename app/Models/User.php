@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
-//use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
-//        HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -70,7 +69,6 @@ class User extends Authenticatable
 
     public function getMessagesChatUser($otherUserId)
     {
-//        $myUserId = auth()->user()->id;
 
         $sentMessages = $this->getMessagesFromMe($otherUserId)->get();
         $receivedMessages = $this->getMessagesToMe($otherUserId)->get();
@@ -81,9 +79,7 @@ class User extends Authenticatable
 
     public function getChatLastMessage($otherUserId)
     {
-//        $otherUserId = auth()->user()->id;
-
-        dd($otherUserId);
+        $otherUserId = auth()->user()->id;
 
         $sentLastMessage = $this->getMessagesFromMe($otherUserId)
             ->orderBy('id', 'desc')

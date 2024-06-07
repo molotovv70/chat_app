@@ -10,8 +10,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UserWithLastMessageResource extends JsonResource
 {
-
-
     /**
      * Transform the resource collection into an array.
      *
@@ -19,11 +17,7 @@ class UserWithLastMessageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-//        $ = auth()->user()->id;
-//        dd($this->id);
-//        dd(auth()->user()->id);
 
-//        $lastMessage = $this->getChatLastMessage($this->id, $myUserId);
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -31,8 +25,7 @@ class UserWithLastMessageResource extends JsonResource
             'description' => $this->description,
             'avatar_path' => $this->avatar_path,
             'created_at' => $this->created_at,
+            'last_message' => $this->last_message[0]['content'],
         ];
     }
-
-//            'chat_last_message' => $this->getChatLastMessage($this->id, $this->id),
 }

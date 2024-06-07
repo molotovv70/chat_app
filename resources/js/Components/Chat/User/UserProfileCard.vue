@@ -42,7 +42,6 @@ const props = defineProps({
     width: 100%;
     color: #e5e7eb;
 }
-
 .profile-card__user-info-container {
     display: flex;
     flex-direction: column;
@@ -50,9 +49,7 @@ const props = defineProps({
     margin: 0;
 }
 .profile-card__user-name {
-
 }
-
 .profile-card__user-id {
     opacity: 0.7;
 }

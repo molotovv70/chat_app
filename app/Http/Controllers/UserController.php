@@ -25,17 +25,12 @@ class UserController extends Controller
     public function index()
     {
         $myUserId = auth()->user();
-        dd($myUserId);
         $users = User::all();
 
-        $lastMessages = collect([]);
-
         foreach ($users as $user) {
-            $lastMessage = $user->getChatLastMessage(12)->get();
-            $lastMessages->push($lastMessage);
+            $lastMessage = $user->getChatLastMessage($myUserId)->get();
+            $user->last_message = $lastMessage->toArray();
         }
-
-        $lastMessages->all();
 
         return UserWithLastMessageResource::collection($users)->resolve();
     }

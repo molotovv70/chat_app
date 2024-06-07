@@ -23,6 +23,7 @@ defineProps({
 
 const page = usePage();
 const username = page.props.auth.user.name
+const avatar_path = page.props.auth.user.avatar_path
 
 const usersStore = useUsersStore();
 const chatsStore = useChatsStore();
@@ -40,6 +41,11 @@ const menuButtons = [
     {id: 0, icon: 'people_alt', title: 'Users', route_name: 'user.chat.show', isRounded: true, store: () => usersStore},
     {id: 1, icon: 'forum', title: 'Chats', route_name: 'chat.show', isRounded: true, store: () => chatsStore},
 ]
+
+const menuBottomButtons = {
+    avatar: { icon: 'people_alt', avatar_path: avatar_path, title: 'Profile', route_name: 'user.chat.show', isRounded: true},
+    logout: { icon: 'forum', title: 'Logout', route_name: 'logout', isRounded: true, color: 'secondary'},
+}
 
 const fetchData = async () => {
     const menuStore = menuButtons[selectedButton.value].store();
@@ -94,7 +100,7 @@ onMounted(async () => {
             </VaSidebarItem>
         </VaSidebar>
         <div class="sidebar__bottom-menu" :class="{'sidebar__bottom-menu-none': showSidebar }" >
-            <div class="sidebar__bottom-btns-container">
+            <div class="sidebar__bottom-btns-top-container">
                 <div
                     v-for="btn in menuButtons"
                     :class="{ 'btn-active': btn.id === selectedButton }"
@@ -102,6 +108,20 @@ onMounted(async () => {
                 >
                     <VaButton @click.prevent="toggleSelectedButton(btn.id)" :icon="btn.icon" :round="btn.isRounded"/>
                     <p class="sidebar__bottom-btn-item-text">{{ btn.title }}</p>
+                </div>
+            </div>
+            <div class="sidebar__bottom-btns-bottom-container">
+                <div class="sidebar__bottom-btn-item">
+                    <VaAvatar
+                        @click="showModal = !showModal"
+                        :src="`/storage/${menuBottomButtons.avatar.avatar_path}`"
+                        class="sidebar__bottom-avatar-btn"
+                    />
+                    <p class="sidebar__bottom-btn-item-text">{{ menuBottomButtons.avatar.title }}</p>
+                </div>
+                <div class="sidebar__bottom-btn-item">
+                    <VaButton icon="logout" :href="route(menuBottomButtons.logout.route_name)" method="post" as="button" :round="true" :color="menuBottomButtons.logout.color"/>
+                    <p class="sidebar__bottom-btn-item-text">{{ menuBottomButtons.logout.title }}</p>
                 </div>
             </div>
         </div>
@@ -115,59 +135,60 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
 .sidebar {
     position: relative;
     width: min-content;
     flex-direction: column;
-    flex-flow: wrap;
-    height: 100%
+    height: 100vh;
+    display: flex;
 }
-
 .sidebar__content {
     height: 100%;
 }
-
 .author {
     opacity: 0.7;
     color: #e5e7eb;
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     right: 10px;
 }
-
 .va-sidebar__menu {
 }
-
 .va-navbar__left {
     align-self: flex-start !important;
 }
-
 .navbar {
     height: min-content;
 }
-
 .sidebar__bottom-menu {
     display: flex;
     position: relative;
+    flex-direction: column;
+    //height: 100%;
+    flex-grow: 1;
     height: 100%;
     width: 100%;
 }
 .sidebar__bottom-menu-none {
     display: none;
 }
-
-.sidebar__bottom-btns-container {
+.sidebar__bottom-btns-top-container {
     display: flex;
     flex-direction: column;
     background-color: rgb(31, 38, 47);
     align-items: flex-start;
+    flex-grow: 1;
     width: 100%;
 }
-
+.sidebar__bottom-btns-bottom-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-self: flex-end;
+    background-color: rgb(31, 38, 47);
+}
 .sidebar__bottom-btn-item:hover {
 }
-
 .sidebar__bottom-btn-item {
     display: flex;
     flex-direction: column;
@@ -176,14 +197,13 @@ onMounted(async () => {
     height: 80px;
     width: 100%;
 }
-
+.sidebar__bottom-avatar-btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
 .sidebar__bottom-btn-item-text {
     opacity: 0.9;
 }
-
-.va-button {
-}
-
 .btn-active {
     background-color: rgba(67, 68, 68, 0.47);
     border-radius: 5px 0 0 5px;

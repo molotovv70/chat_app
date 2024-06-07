@@ -10,7 +10,7 @@ export const useUsersStore = defineStore('users', {
             try {
                 // if (!this.users) {
                 //     const res = await axios.get('/api/users');
-                    const res = await axios.get('/users');
+                    const res = await axios.get('/api/users');
                     this.users = res.data; // Обновляем состояние users данными из ответа
                 // }
                 // return this.users

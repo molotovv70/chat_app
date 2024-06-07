@@ -10,15 +10,17 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::get('/user1', function (Request $request) {
+    return $request->user();
+})->middleware('api');
 
-//Route::prefix('/users')->group(function () {
-//    Route::get('/', [UserController::class, 'index']);
-//})->name('user');
+Route::prefix('/users')->middleware('web')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+})->name('user');
 
 Route::get('test', function () {
-//   dd(Route::getCurrentRoute()->middleware());
-    return \Illuminate\Support\Facades\Auth::user();
-});
+    return auth()->user();
+})->middleware('api');
 
 Route::prefix('/chats')->group(function () {
     Route::get('/', [ChatController::class, 'getChats']);
