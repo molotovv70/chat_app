@@ -27,7 +27,7 @@ class UserMessage extends Model
     ];
 
 
-//    protected function casts(): array
+//    protected function casts():
 //    {
 //        return [
 //            'created_at' => 'datetime:Y-m-d H:i:s',

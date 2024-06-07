@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StoreUserMessageEvent;
 use App\Http\Requests\User\StoreChat;
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserWithLastMessageResource;
+use App\Http\Resources\UserMessageResource;
 use App\Models\Message;
 use App\Models\User;
 use App\Models\UserMessage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -24,6 +27,11 @@ class UserController extends Controller
         $myUserId = auth()->user();
         $users = User::all();
 
+        foreach ($users as $user) {
+            $lastMessage = $user->getChatLastMessage($myUserId)->get();
+            $user->last_message = $lastMessage->toArray();
+        }
+
         return UserWithLastMessageResource::collection($users)->resolve();
     }
 
@@ -35,9 +43,14 @@ class UserController extends Controller
     {
         $data = $request->all();
         $data['user_id_to'] = $id;
-//        dd($data);
 
-        $message = UserMessage::create($data);
+        $userIdTo = $id;
+//        dd($userIdTo);
+        $message = UserMessage::create($data)->toArray();
+//        dd($message->data)
+
+        StoreUserMessageEvent::dispatch($userIdTo, $message);
+//        StoreUserMessageEvent::dispatch($data);
 
         return $message;
     }
@@ -47,25 +60,18 @@ class UserController extends Controller
      */
     public function show(string $fromId)
     {
-//        $authUserId = auth()->user()->id;
-//        $user = User::find($authUserId);
-//        $userData = UserResource::make($user)->resolve();
-//
-//        $messages = $user->getMessagesChatUser($fromId);
-
         $user = User::find($fromId);
         $userData = UserResource::make($user)->resolve();
 
-        $myUserId = auth()->user()->id;
+        $myUserId = Auth::id();
         $messages = $user->getMessagesChatUser($myUserId);
 
-        foreach ($messages as $message) {
-            $message->created_at_formatted = $message->created_at->diffForHumans();
-            $message->updated_at_formatted = $message->updated_at->toFormattedDateString();
-        }
+        $messagesResource = UserMessageResource::collection($messages)->resolve();
 
-
-        return Inertia::render('User/Show', ['user_to' => $userData, 'messages' => $messages]);
+        return Inertia::render('User/Show', [
+            'user_to' => $userData,
+            'messages' => $messagesResource,
+        ]);
     }
 
     /**

@@ -69,7 +69,6 @@ class User extends Authenticatable
 
     public function getMessagesChatUser($otherUserId)
     {
-//        $myUserId = auth()->user()->id;
 
         $sentMessages = $this->getMessagesFromMe($otherUserId)->get();
         $receivedMessages = $this->getMessagesToMe($otherUserId)->get();
@@ -78,24 +77,22 @@ class User extends Authenticatable
     }
 
 
-    public function getMessagesChatUserQuery($otherUserId, $myUserId)
+    public function getChatLastMessage($otherUserId)
     {
-//        $myUserId = auth()->user()->id;
+        $otherUserId = auth()->user()->id;
 
-        return UserMessage::where(function ($query) use ($myUserId, $otherUserId) {
-            $query->where('user_id_from', $myUserId)
-                ->where('user_id_to', $otherUserId);
-        })->orWhere(function ($query) use ($myUserId, $otherUserId) {
-            $query->where('user_id_from', $otherUserId)
-                ->where('user_id_to', $myUserId);
-        });
-    }
+        $sentLastMessage = $this->getMessagesFromMe($otherUserId)
+            ->orderBy('id', 'desc')
+            ->limit(1);
 
-    public function getChatLastMessage($otherUserId, $myUserId, Request $request)
-    {
-        dd($request->id);
-        return $this->getMessagesChatUserQuery($otherUserId, $myUserId)
-            ->orderBy('created_at', 'desc')
-            ->first();
+        $receivedLastMessage = $this->getMessagesToMe($otherUserId)
+            ->orderBy('id', 'desc')
+            ->limit(1);
+
+        $lastMessage = $sentLastMessage->unionAll($receivedLastMessage)
+            ->orderBy('id', 'desc')
+            ->limit(1);
+
+        return $lastMessage;
     }
 }

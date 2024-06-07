@@ -9,6 +9,7 @@ export const useUsersStore = defineStore('users', {
         async setValue() {
             try {
                 // if (!this.users) {
+                //     const res = await axios.get('/api/users');
                     const res = await axios.get('/api/users');
                     this.users = res.data; // Обновляем состояние users данными из ответа
                 // }
@@ -20,8 +21,11 @@ export const useUsersStore = defineStore('users', {
         addValue(user) {
             this.users.push(user);
         },
-        getSingleValue(id) {
-            return this.users[id];
+        async getSingleValue(id) {
+            if (this.users.length === 0) {
+                await this.setValue();
+            }
+            return this.users.find((user) => user.id === id);
         }
     },
     getters: {

@@ -23,8 +23,6 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
 Route::middleware('auth')->group(function () {
     Route::prefix('/chats')->prefix('chats')->group(function () {
         Route::get('/', [ChatController::class, 'index'])->name('chat.index');

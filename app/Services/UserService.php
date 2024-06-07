@@ -8,7 +8,7 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class UserService
 {
-    public static function storeAvatarUser($data): string
+    public static function storeAvatarUser($data): string | null
     {
         if (isset($data['avatar_path'])) {
             $path = Storage::disk('public')->put('/avatars', $data['avatar_path']);

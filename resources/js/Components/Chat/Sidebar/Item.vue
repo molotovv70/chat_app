@@ -60,5 +60,12 @@ defineProps({
 .item-item__last-message {
     font-size: 0.75em;
     opacity: 0.7;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-wrap: break-word;
+    display: block;
+    max-height: 4.5em;
+
 }
 </style>
