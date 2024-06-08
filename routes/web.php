@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\ChatMessageController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserMessageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,20 +29,26 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [ChatController::class, 'index'])->name('chat.index');
         Route::get('/create', [ChatController::class, 'create'])->name('chat.create');
         Route::post('/', [ChatController::class, 'store'])->name('chat.store');
+
+        Route::prefix('/messages')->group(function () {
+            Route::post('/{id}', [ChatMessageController::class, 'store']);
+        });
+
         Route::get('/{id}', [ChatController::class, 'show'])->name('chat.show');
     });
 
-    Route::prefix('/messages')->prefix('messages')->group(function () {
+    Route::prefix('/messages')->group(function () {
         // view routes for admin...
 //        Route::get('/', [ChatController::class, 'index'])->name('message.index');
         Route::post('/', [MessageController::class, 'store'])->name('message.store');
+
     });
 
     Route::prefix('/users')->prefix('users')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('user.index');
-        Route::post('/', [UserController::class, 'storeMessage'])->name('user.chat.store');
-        Route::get('/{id}/chat', [UserController::class, 'show'])->name('user.chat.show');
-        Route::post('/{id}/chat', [UserController::class, 'store'])->name('user.chat.store');
+        Route::get('/', [UserMessageController::class, 'index'])->name('user.index');
+        Route::post('/', [UserMessageController::class, 'storeMessage'])->name('user.chat.store');
+        Route::get('/{id}/chat', [UserMessageController::class, 'show'])->name('user.chat.show');
+        Route::post('/{id}/chat', [UserMessageController::class, 'store'])->name('user.chat.store');
 //        Route::patch('/', [UserController::class, 'store'])->name('user.message.update');
     });
 });

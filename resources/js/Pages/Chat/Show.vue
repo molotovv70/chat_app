@@ -6,17 +6,18 @@ import {usePage} from "@inertiajs/vue3";
 import UserChatBox from "@/Components/Chat/Messenging/UserChatBox.vue";
 import {computed, nextTick, onMounted, ref, watch} from "vue";
 import { useUsersStore } from "@/Stores/User.js";
+import ChatChatBox from "@/Components/Chat/Messenging/ChatChatBox.vue";
 
 const userStore = useUsersStore();
 
 const page = usePage();
 const user = page.props.auth.user
 
+    // user_to: {
+    //     type: Object,
+    //     default: {}
+    // },
 const props = defineProps({
-    user_to: {
-        type: Object,
-        default: {}
-    },
     messages: {
         type: Array,
         default: []
@@ -41,23 +42,23 @@ const scrollToBottom = () => {
     }
 };
 const sendMessage = async (message) => {
-    const response = await axios.post(`/chats/${props.chat.id}`, {
+    const response = await axios.post(`/chats/messages/${props.chat.id}`, {
         user_id: user.id,
         content: message,
     });
     props.messages.push(response.data)
 }
 
-onMounted(() =>{
-    Echo.channel(`users.${user.id}`)
-        .listen('StoreUserMessageEvent', (res) => {
-            props.messages.push(res.message)
-        })
-        .error((e) => {
-            console.log(e)
-        })
-    scrollToBottom();
-})
+// onMounted(() =>{
+//     Echo.channel(`users.${user.id}`)
+//         .listen('StoreUserMessageEvent', (res) => {
+//             props.messages.push(res.message)
+//         })
+//         .error((e) => {
+//             console.log(e)
+//         })
+//     scrollToBottom();
+// })
 
 watch(props.messages, () => {
     setTimeout(scrollToBottom, 1)
@@ -70,15 +71,14 @@ const computeUser = (message) => {
 
 <template>
     <div class="chat__container dark:bg-gray-800" ref="chatContainer">
-        <UserChatBox :user_to="user_to" />
+        <ChatChatBox :chat="chat" />
         <div class="chat__messages-container">
             <div class="chat__messages">
                 <MessageChatBox
                     v-for="message in messages"
                     :message="message"
-                    :user="computeUser(message)"
-                    :user_to="user_to"
-                    :is-yours="message.user_id_from === user.id"
+                    :user="message.user"
+                    :is-yours="message.user_id === user.id"
                     class="chat__message-item"
                 />
             </div>

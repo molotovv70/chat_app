@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Chat;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Chat\StoreRequest;
 use App\Http\Resources\Chat\ChatWithLastMessageResource;
+use App\Http\Resources\ChatMessageWithUserResource;
 use App\Models\Chat;
+use App\Models\ChatMessage;
 use App\Models\User;
 use App\Services\ChatService;
 use Illuminate\Http\Request;
@@ -42,14 +44,10 @@ class ChatController extends Controller
      */
     public function store(StoreRequest $request)
     {
-//        dd($request->all());
         $data = $request->validated();
-//        dd($data);
         $data['avatar_path'] = ChatService::storeAvatarChat($data);
 
-//        dd($data);
         $chat = Chat::create($data);
-//        dd($chat);
 
         return redirect()->route('chat.show', ['id' => $chat->id]);
     }
@@ -61,7 +59,10 @@ class ChatController extends Controller
     {
         $chat = Chat::findOrFail($id);
 
-        return Inertia::render('Chat/Show', ['chat' => $chat]);
+        $messages = $chat->getChatMessages()->get();
+        $messages = ChatMessageWithUserResource::collection($messages)->resolve();
+
+        return Inertia::render('Chat/Show', ['chat' => $chat, 'messages' => $messages]);
     }
 
     /**

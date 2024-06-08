@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
-class UserController extends Controller
+class UserMessageController extends Controller
 {
 
     /**
