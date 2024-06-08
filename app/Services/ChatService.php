@@ -9,13 +9,15 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class ChatService
 {
-    public static function storeAvatarChat($path): string | null
+    public static function storeAvatarChat($data): string | null
     {
-        if (isset($path)) {
-            $path = Storage::disk('public')->put('/chats', $path);
+        if (isset($data['avatar_path'])) {
+            $path = Storage::disk('public')->put('/chats', $data['avatar_path']);
 
             $fullPathURL = Storage::url($path);
+
             $fullPathURL = Str::ltrim($fullPathURL, $fullPathURL[0]);
+//            dd($fullPathURL);
 
             Image::read($fullPathURL)->resize(100, 100)->save();
 

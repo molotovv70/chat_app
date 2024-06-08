@@ -17,7 +17,7 @@ class ChatWithLastMessageResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'name' => $this->title,
             'description' => $this->description,
             'avatar_path' => $this->avatar_path,
             'created_at' => $this->created_at,

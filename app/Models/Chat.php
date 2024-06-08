@@ -12,16 +12,9 @@ class Chat extends Model
 
     protected $guarded = false;
 
-    protected $fillable = ['*'];
-
-//    protected $fillable = [
-//        'title',
-//        'description',
-//        'avatar_path',
-//    ];
-
-//    protected $hidden = [
-//        'password',
-//        'remember_token',
-//    ];
+    protected $fillable = [
+        'title',
+        'description',
+        'avatar_path',
+    ];
 }

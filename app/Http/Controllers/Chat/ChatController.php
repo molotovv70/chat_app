@@ -42,18 +42,22 @@ class ChatController extends Controller
      */
     public function store(StoreRequest $request)
     {
+//        dd($request->all());
         $data = $request->validated();
-        $data['avatar_path'] = ChatService::storeAvatarChat($data['avatar_path']);
+//        dd($data);
+        $data['avatar_path'] = ChatService::storeAvatarChat($data);
 
+//        dd($data);
         $chat = Chat::create($data);
+//        dd($chat);
 
-        return redirect()->route('chat.show', $chat->id);
+        return redirect()->route('chat.show', ['id' => $chat->id]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         $chat = Chat::findOrFail($id);
 
