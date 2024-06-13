@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserMessageResource extends JsonResource
 {
+
     /**
      * Transform the resource into an array.
      *

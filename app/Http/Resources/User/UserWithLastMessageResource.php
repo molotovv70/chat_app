@@ -25,7 +25,7 @@ class UserWithLastMessageResource extends JsonResource
             'description' => $this->description,
             'avatar_path' => $this->avatar_path,
             'created_at' => $this->created_at,
-            'last_message' => $this->last_message[0]['content'],
+            'last_message' => $this->last_message[0]['content'] ?? '',
         ];
     }
 }

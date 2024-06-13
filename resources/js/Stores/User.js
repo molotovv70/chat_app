@@ -11,7 +11,7 @@ export const useUsersStore = defineStore('users', {
                 // if (!this.users) {
                 //     const res = await axios.get('/api/users');
                     const res = await axios.get('/api/users');
-                    this.users = res.data; // Обновляем состояние users данными из ответа
+                    this.users = res.data;
                 // }
                 // return this.users
             } catch (e) {
@@ -20,6 +20,10 @@ export const useUsersStore = defineStore('users', {
         },
         addValue(user) {
             this.users.push(user);
+        },
+        async updateLastMessage(message) {
+            const user = await this.getSingleValue(Number(message.user_id_to))
+            user.last_message = message.content
         },
         async getSingleValue(id) {
             if (this.users.length === 0) {

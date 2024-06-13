@@ -45,12 +45,9 @@ class UserController extends Controller
         $data['user_id_to'] = $id;
 
         $userIdTo = $id;
-//        dd($userIdTo);
         $message = UserMessage::create($data)->toArray();
-//        dd($message->data)
 
         StoreUserMessageEvent::dispatch($userIdTo, $message);
-//        StoreUserMessageEvent::dispatch($data);
 
         return $message;
     }

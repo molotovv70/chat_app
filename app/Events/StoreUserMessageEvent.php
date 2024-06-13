@@ -3,6 +3,8 @@
 namespace App\Events;
 
 use App\Http\Resources\Message\MessageResource;
+use App\Http\Resources\UserMessageResource;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -25,11 +27,15 @@ class StoreUserMessageEvent implements ShouldBroadcast
     {
         $this->id = $id;
         $this->message = $message;
-//        dd($message['user_id_to']);
+//        dd($id, $message['user_id_to']);
+//        dd(User::find($id)->id);
     }
 
+    public function broadcastWhen(): bool
+    {
+        return (int) $this->id !== auth()->id();
+    }
 
-//            'message' => MessageResource::make($this->message->loadCount('likedUsers'))->resolve(),
     public function broadcastWith()
     {
         return [
@@ -45,7 +51,7 @@ class StoreUserMessageEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('users.'.$this->message['user_id_to']),
+            new PrivateChannel('users.'.$this->message['user_id_to']),
         ];
     }
 }

@@ -41,13 +41,17 @@ const sendMessage = async (message) => {
         user_id_from: user.id,
         content: message,
     });
-    props.messages.push(response.data)
+    props.messages.push(response.data);
+    userStore.updateLastMessage(response.data);
 }
 
-onMounted(() =>{
-    Echo.channel(`users.${user.id}`)
+
+onMounted(() => {
+    Echo.private(`users.${user.id}`)
         .listen('StoreUserMessageEvent', (res) => {
-            props.messages.push(res.message)
+            console.log(res);
+            props.messages.push(res.message);
+            userStore.updateLastMessage(res.message);
         })
         .error((e) => {
             console.log(e)
