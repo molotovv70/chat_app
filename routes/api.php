@@ -16,6 +16,9 @@ Route::get('/user1', function (Request $request) {
 
 Route::prefix('/users')->middleware('web')->group(function () {
     Route::get('/', [UserController::class, 'index']);
+
+    Route::get('/{fromId}/messages', [UserController::class, 'fetchUserChatMessages']);
+
 })->name('user');
 
 Route::get('test', function () {

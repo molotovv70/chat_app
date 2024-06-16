@@ -20,8 +20,6 @@ class UserMessageResource extends JsonResource
             'content' => $this->content,
             'user_id_from' => $this->user_id_from,
             'user_id_to' => $this->user_id_to,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'created_at_formatted' => $this->created_at->diffForHumans(),
             'updated_at_formatted' => $this->updated_at->toFormattedDateString(),
         ];

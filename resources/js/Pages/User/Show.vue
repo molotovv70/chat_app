@@ -6,8 +6,10 @@ import {usePage} from "@inertiajs/vue3";
 import UserChatBox from "@/Components/Chat/Messenging/UserChatBox.vue";
 import {computed, nextTick, onMounted, ref, watch} from "vue";
 import { useUsersStore } from "@/Stores/User.js";
+import {useMessagesStore} from "@/Stores/Messages.js";
 
 const userStore = useUsersStore();
+// const messagesStore = useMessagesStore();
 
 const page = usePage();
 const user = page.props.auth.user
@@ -18,8 +20,8 @@ const props = defineProps({
         default: {}
     },
     messages: {
-        type: Array,
-        default: []
+        type: Object,
+        default: {}
     },
 })
 
@@ -27,9 +29,8 @@ defineOptions({
     layout: MainLayout
 })
 
-// const user = ref();
 const chatContainer = ref(null);
-
+const messagesPage = ref(1);
 
 const scrollToBottom = () => {
     if (chatContainer.value) {
@@ -41,26 +42,34 @@ const sendMessage = async (message) => {
         user_id_from: user.id,
         content: message,
     });
-    props.messages.push(response.data);
+    props.messages.data.push(response.data);
     userStore.updateLastMessage(response.data);
+    setTimeout(scrollToBottom, 1)
+}
+
+const fetchMessages = async () => {
+    try {
+        const res = await axios.get(`/api/users/${props.user_to.id}/messages?page=${++messagesPage.value}`);
+        await props.messages.data.unshift(...res.data.data.reverse())
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 
-onMounted(() => {
+onMounted(async () => {
     Echo.private(`users.${user.id}`)
         .listen('StoreUserMessageEvent', (res) => {
-            console.log(res);
-            props.messages.push(res.message);
+            props.messages.data.push(res.message);
             userStore.updateLastMessage(res.message);
+            setTimeout(scrollToBottom, 1)
         })
         .error((e) => {
             console.log(e)
         })
+    // await messagesStore.setValue(props.user_to.id)
+    await props.messages.data.reverse();
     scrollToBottom();
-})
-
-watch(props.messages, () => {
-    setTimeout(scrollToBottom, 1)
 })
 
 const computeUser = (message) => {
@@ -69,12 +78,18 @@ const computeUser = (message) => {
 </script>
 
 <template>
-    <div class="chat__container dark:bg-gray-800" ref="chatContainer">
+    <div class="chat__container dark:bg-gray-800">
         <UserChatBox :user_to="user_to" />
-        <div class="chat__messages-container">
+
+        <div class="chat__messages-container" ref="chatContainer">
+
+            <VaInfiniteScroll
+                :load="fetchMessages"
+                reverse
+            >
             <div class="chat__messages">
                 <MessageChatBox
-                    v-for="message in messages"
+                    v-for="message in messages.data"
                     :message="message"
                     :user="computeUser(message)"
                     :user_to="user_to"
@@ -82,7 +97,10 @@ const computeUser = (message) => {
                     class="chat__message-item"
                 />
             </div>
+            </VaInfiniteScroll>
+
         </div>
+
     <InputMessageForm class="chat__input-message" @message-send="sendMessage" />
     </div>
 </template>
@@ -93,6 +111,7 @@ const computeUser = (message) => {
     position: relative;
     scroll-margin: -100px !important;
     scroll-padding: 200px;
+    scroll-behavior: smooth;
     flex-direction: column;
     flex-grow: 1;
     width: 760px;
@@ -100,12 +119,14 @@ const computeUser = (message) => {
     padding: 20px;
     height: 100vh;
     margin: auto;
-    scroll-behavior: smooth;
 }
 .chat__messages-container {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    scroll-margin: -100px !important;
+    scroll-padding: 200px;
+    scroll-behavior: smooth;
 }
 .chat__messages {
     display: flex;

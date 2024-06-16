@@ -70,10 +70,19 @@ class User extends Authenticatable
     public function getMessagesChatUser($otherUserId)
     {
 
-        $sentMessages = $this->getMessagesFromMe($otherUserId)->get();
-        $receivedMessages = $this->getMessagesToMe($otherUserId)->get();
+        $messages = $this->getMessagesToMe($otherUserId)->unionAll($this->getMessagesFromMe($otherUserId))->orderBy('id', 'desc');
 
-        return $sentMessages->merge($receivedMessages)->sortBy('created_at');
+        return $messages;
+//        return $this->hasMany(UserMessage::class, 'user_id_to', 'id')
+//            ->where('user_id_from', '=', $otherUserId)
+//            ->orWhere('user_id_to', '=', $otherUserId)
+//            ->orderBy('created_at')
+//            ->paginate(10);
+
+//        $sentMessages = $this->getMessagesFromMe($otherUserId)->get();
+//        $receivedMessages = $this->getMessagesToMe($otherUserId)->get();
+//
+//        return $sentMessages->merge($receivedMessages)->sortBy('created_at');
     }
 
 

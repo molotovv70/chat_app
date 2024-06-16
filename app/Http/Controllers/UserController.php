@@ -61,9 +61,11 @@ class UserController extends Controller
         $userData = UserResource::make($user)->resolve();
 
         $myUserId = Auth::id();
+//        $messages = $user->getMessagesChatUser($myUserId)->get()->reverse(); OLD
         $messages = $user->getMessagesChatUser($myUserId);
 
-        $messagesResource = UserMessageResource::collection($messages)->resolve();
+//        $messagesResource = UserMessageResource::collection($messages)->resolve(); OLD
+        $messagesResource = UserMessageResource::collection($messages->paginate(15));
 
         return Inertia::render('User/Show', [
             'user_to' => $userData,
@@ -93,4 +95,15 @@ class UserController extends Controller
 
     }
 
+    public function fetchUserChatMessages($fromId)
+    {
+        $user = User::find($fromId);
+        $myUserId = Auth::id();
+
+        $messages = $user->getMessagesChatUser($myUserId);
+
+        $userMessagesResourceWithPagination = UserMessageResource::collection($messages->paginate(15));
+
+        return $userMessagesResourceWithPagination;
+    }
 }
