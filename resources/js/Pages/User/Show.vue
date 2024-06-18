@@ -9,7 +9,6 @@ import { useUsersStore } from "@/Stores/User.js";
 import {useMessagesStore} from "@/Stores/Messages.js";
 
 const userStore = useUsersStore();
-// const messagesStore = useMessagesStore();
 
 const page = usePage();
 const user = page.props.auth.user

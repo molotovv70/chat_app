@@ -29,13 +29,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [ChatController::class, 'create'])->name('chat.create');
         Route::post('/', [ChatController::class, 'store'])->name('chat.store');
         Route::get('/{id}', [ChatController::class, 'show'])->name('chat.show');
+
+        Route::post('/{id}/message', [ChatController::class, 'storeMessage'])->name('chat.message.store');
+        Route::post('/{id}/join', [ChatController::class, 'joinChat'])->name('chat.join.store');
     });
 
-    Route::prefix('/messages')->prefix('messages')->group(function () {
-        // view routes for admin...
-//        Route::get('/', [ChatController::class, 'index'])->name('message.index');
-        Route::post('/', [MessageController::class, 'store'])->name('message.store');
-    });
+//    Route::prefix('/messages')->prefix('messages')->group(function () {
+//        // view routes for admin...
+////        Route::get('/', [ChatController::class, 'index'])->name('message.index');
+//        Route::post('/', [MessageController::class, 'store'])->name('message.store');
+//    });
 
     Route::prefix('/users')->prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('user.index');

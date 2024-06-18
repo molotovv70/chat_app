@@ -17,6 +17,16 @@ export const useChatsStore = defineStore('chats', {
         addValue(chat) {
             this.chats.push(chat);
         },
+        async updateLastMessage(message) {
+            const chat = await this.getSingleValue(Number(message.user_id_to))
+            chat.last_message = message.content
+        },
+        async getSingleValue(id) {
+            if (this.chats.length === 0) {
+                await this.setValue();
+            }
+            return this.chats.find((chat) => chat.id === id);
+        },
     },
     getters: {
         getValue() {

@@ -69,7 +69,6 @@ class User extends Authenticatable
 
     public function getMessagesChatUser($otherUserId)
     {
-
         $messages = $this->getMessagesToMe($otherUserId)->unionAll($this->getMessagesFromMe($otherUserId))->orderBy('id', 'desc');
 
         return $messages;
@@ -103,5 +102,11 @@ class User extends Authenticatable
             ->limit(1);
 
         return $lastMessage;
+    }
+
+    public function getChatRole($chatId)
+    {
+        $role = $this->hasMany(ChatUser::class, 'user_id')->where('chat_id', $chatId) ?? 'none';
+        return $role;
     }
 }

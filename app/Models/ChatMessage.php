@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserMessage extends Model
+class ChatMessage extends Model
 {
     use HasFactory;
 
-    protected $table = 'user_messages';
+    protected $table = 'chat_messages';
 
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i:s',
@@ -17,8 +17,7 @@ class UserMessage extends Model
     ];
 
     protected $fillable = [
-        'user_id_from',
-        'user_id_to',
+        'user_id',
         'chat_id',
         'parent_id',
         'content',

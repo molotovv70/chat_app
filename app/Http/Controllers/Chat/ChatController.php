@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Chat;
 
+use App\Enums\Roles;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Chat\StoreRequest;
 use App\Http\Resources\Chat\ChatWithLastMessageResource;
 use App\Models\Chat;
+use App\Models\ChatMessage;
+use App\Models\ChatUser;
 use App\Models\User;
 use App\Services\ChatService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class ChatController extends Controller
@@ -47,7 +51,18 @@ class ChatController extends Controller
 
         $chat = Chat::create($data);
 
-        return redirect()->route('chat.show', $chat->id);
+        $user = auth()->user();
+
+        $chatUserData = [
+            'user_id' => $user->id,
+            'chat_id' => $chat->id,
+            'role_id' => Roles::Admin->value,
+        ];
+
+        $chatUserData = ChatUser::create($chatUserData);
+        $role = $chatUserData['role_id'];
+
+        return redirect()->route('chat.show', ['id' => $chat->id]);
     }
 
     /**
@@ -57,7 +72,14 @@ class ChatController extends Controller
     {
         $chat = Chat::findOrFail($id);
 
-        return Inertia::render('Chat/Show', ['chat' => $chat]);
+        $user = Auth::user();
+        $user->role = $user->getChatRole($id)->get()->toArray();
+
+        $messages = $chat->getMessages()->get()->toArray();
+
+        $users = $chat->getUsers()->get()->toArray();
+
+        return Inertia::render('Chat/Show', ['chat' => $chat, 'user' => $user, 'messages' => $messages, 'users' => $users]);
     }
 
     /**
@@ -84,12 +106,35 @@ class ChatController extends Controller
         //
     }
 
-    public function getChats() {
+    public function getChats()
+    {
         $chats = Chat::all();
 
         $chatsArray = ChatWithLastMessageResource::collection($chats)->resolve();
 
         return $chatsArray;
 
+    }
+
+    public function storeMessage($id, Request $request)
+    {
+        $message = ChatMessage::create([
+            'user_id' => auth()->id(),
+            'chat_id' => $id,
+            'content' => $request['content'],
+        ]);
+        return $message;
+    }
+
+    public function joinChat($id)
+    {
+        $user = Auth::user();
+
+        $chatUserData = ChatUser::firstOrCreate([
+            'user_id' => auth()->id(),
+            'chat_id' => $id,
+        ]);
+
+        return $chatUserData;
     }
 }
