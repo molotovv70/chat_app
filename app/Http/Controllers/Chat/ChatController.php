@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Chat;
 
 use App\Enums\Roles;
+use App\Events\StoreUserChatMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Chat\StoreRequest;
 use App\Http\Resources\Chat\ChatWithLastMessageResource;
@@ -123,6 +124,11 @@ class ChatController extends Controller
             'chat_id' => $id,
             'content' => $request['content'],
         ]);
+
+        $messageChat = $message->toArray();
+
+        StoreUserChatMessageEvent::dispatch($id, auth()->id(), $messageChat);
+
         return $message;
     }
 

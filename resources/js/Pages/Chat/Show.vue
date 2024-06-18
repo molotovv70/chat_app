@@ -50,7 +50,6 @@ const sendMessage = async (message) => {
     const response = await axios.post(`/chats/${props.chat.id}/message`, {
         content: message,
     });
-    props.messages.push(response.data);
     chatStore.updateLastMessage(response.data);
     setTimeout(scrollToBottom, 1)
     console.log(response)
@@ -68,7 +67,6 @@ const computedUsers = ref({});
 
 const computeUser = async (message) => {
     const currentUser = props.users.find(user => user.id === message.user_id) || {};
-    console.log(currentUser);
     return message.user_id == props.user.id ? props.user : currentUser;
 };
 
@@ -81,17 +79,18 @@ const computeAllUsers = async () => {
 onMounted(async () => {
     user.role[0]?.created_at ? isUserJoin.value = !isUserJoin.value : ''
     computeAllUsers();
-    Echo.private(`users.${user.id}`)
-        .listen('StoreUserMessageEvent', (res) => {
-            props.messages.data.push(res.message);
-            userStore.updateLastMessage(res.message);
+    Echo.channel(`chats.${props.chat.id}`)
+        .listen('StoreUserChatMessageEvent', async (res) => {
+            props.messages.push(res.message);
+            await computeAllUsers();
+            // userStore.updateLastMessage(res.message);
             setTimeout(scrollToBottom, 1)
         })
         .error((e) => {
             console.log(e)
         })
     // await messagesStore.setValue(props.user_to.id)
-    await props.messages.data.reverse();
+    // await props.messages.data.reverse();
     scrollToBottom();
 })
 
